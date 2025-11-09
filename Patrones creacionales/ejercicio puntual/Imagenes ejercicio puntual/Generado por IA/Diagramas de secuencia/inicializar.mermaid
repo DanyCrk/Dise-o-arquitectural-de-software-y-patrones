@@ -1,0 +1,51 @@
+sequenceDiagram
+    actor Usuario
+    participant Main
+    participant Tk as Tk (root)
+    participant BH as ButtonHandler
+    participant UI as AutoSearchUI
+    
+    Usuario->>Main: Ejecutar aplicación
+    activate Main
+    
+    Main->>Tk: Tk()
+    activate Tk
+    Tk-->>Main: root
+    
+    Main->>Tk: root.withdraw()
+    Note over Tk: Oculta ventana principal
+    
+    Main->>Tk: root.title("Abstract Factory Example")
+    
+    Main->>BH: ButtonHandler(root)
+    activate BH
+    
+    BH->>UI: AutoSearchUI(root)
+    activate UI
+    
+    UI->>UI: Crear ComboBox categoría<br/>[Luxury, Non-Luxury]
+    UI->>UI: Crear ComboBox tipo<br/>[Car, SUV, Mini-Van]
+    UI->>UI: Crear Labels
+    UI->>UI: Crear Buttons (Show, Exit)
+    UI->>UI: Organizar en grid
+    
+    UI-->>BH: frame
+    
+    BH->>UI: getExitButton()
+    UI-->>BH: exitButton
+    BH->>UI: config(command=eventExitButton)
+    
+    BH->>UI: getOpenButton()
+    UI-->>BH: openButton
+    BH->>UI: config(command=eventOpenButton)
+    
+    BH-->>Main: handler
+    deactivate BH
+    
+    Main->>Tk: root.mainloop()
+    Note over Tk: Inicia loop de eventos
+    
+    Tk-->>Usuario: Muestra interfaz
+    deactivate UI
+    deactivate Tk
+    deactivate Main

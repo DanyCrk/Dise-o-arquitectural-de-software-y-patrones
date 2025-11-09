@@ -1,0 +1,151 @@
+classDiagram
+    %% Abstract Products - THREE INDEPENDENT HIERARCHIES
+    class Car {
+        <<abstract>>
+        +getCarName() String
+        +getCarFeatures() String
+    }
+    
+    class SUV {
+        <<abstract>>
+        +getSUVName() String
+        +getSUVFeatures() String
+    }
+    
+    class Minivan {
+        <<abstract>>
+        +getMinivanName() String
+        +getMinivanFeatures() String
+    }
+    
+    %% Concrete Products - Luxury Family
+    class LuxuryCar {
+        -name: String
+        +__init__(cName)
+        +getCarName() String
+        +getCarFeatures() String
+    }
+    
+    class LuxurySUV {
+        -name: String
+        +__init__(sName)
+        +getSUVName() String
+        +getSUVFeatures() String
+    }
+    
+    class LuxuryMinivan {
+        -name: String
+        +__init__(mName)
+        +getMinivanName() String
+        +getMinivanFeatures() String
+    }
+    
+    %% Concrete Products - Non-Luxury Family
+    class NonLuxuryCar {
+        -name: String
+        +__init__(cName)
+        +getCarName() String
+        +getCarFeatures() String
+    }
+    
+    class NonLuxurySUV {
+        -name: String
+        +__init__(sName)
+        +getSUVName() String
+        +getSUVFeatures() String
+    }
+    
+    class NonLuxuryMinivan {
+        -name: String
+        +__init__(mName)
+        +getMinivanName() String
+        +getMinivanFeatures() String
+    }
+    
+    %% Abstract Factory
+    class VehicleFactory {
+        <<abstract>>
+        +LUXURY_VEHICLE: String$
+        +NON_LUXURY_VEHICLE: String$
+        +getCar() Car*
+        +getSUV() SUV*
+        +getMiniVan() Minivan*
+        +getVehicleFactory(tipo)$ VehicleFactory
+    }
+    
+    %% Concrete Factories
+    class LuxuryVehicleFactory {
+        +__init__()
+        +getCar() Car
+        +getSUV() SUV
+        +getMiniVan() Minivan
+    }
+    
+    class NonLuxuryVehicleFactory {
+        +__init__()
+        +getCar() Car
+        +getSUV() SUV
+        +getMiniVan() Minivan
+    }
+    
+    %% UI and Client
+    class AutoSearchUI {
+        -cmbVehicleCategory: Combobox
+        -cmbVehicleType: Combobox
+        -lblVehicleCategory: Label
+        -lblVehicleType: Label
+        -lblCarName: Label
+        -lblCarNameValue: Label
+        -openButton: Button
+        -exitButton: Button
+        +SEARCH: String$
+        +EXIT: String$
+        +CAR: String$
+        +SUV: String$
+        +MiniVan: String$
+        +__init__(master)
+        +getExitButton() Button
+        +getOpenButton() Button
+        +getCmbVehicleCategory() Combobox
+        +getCmbVehicleType() Combobox
+        +getLblCarNameValue() Label
+        +setText(s)
+    }
+    
+    class ButtonHandler {
+        -root: Tk
+        -frame: AutoSearchUI
+        +__init__(root)
+        +eventExitButton()
+        +eventOpenButton()
+    }
+    
+    %% Inheritance - THREE SEPARATE HIERARCHIES (NO RELATION BETWEEN THEM)
+    Car <|-- LuxuryCar : extends
+    Car <|-- NonLuxuryCar : extends
+    
+    SUV <|-- LuxurySUV : extends
+    SUV <|-- NonLuxurySUV : extends
+    
+    Minivan <|-- LuxuryMinivan : extends
+    Minivan <|-- NonLuxuryMinivan : extends
+    
+    VehicleFactory <|-- LuxuryVehicleFactory : extends
+    VehicleFactory <|-- NonLuxuryVehicleFactory : extends
+    
+    %% Factory dependency - returns these types
+    VehicleFactory ..> Car : <<returns>>
+    VehicleFactory ..> SUV : <<returns>>
+    VehicleFactory ..> Minivan : <<returns>>
+    
+    LuxuryVehicleFactory ..> LuxuryCar : <<instantiates>>
+    LuxuryVehicleFactory ..> LuxurySUV : <<instantiates>>
+    LuxuryVehicleFactory ..> LuxuryMinivan : <<instantiates>>
+    
+    NonLuxuryVehicleFactory ..> NonLuxuryCar : <<instantiates>>
+    NonLuxuryVehicleFactory ..> NonLuxurySUV : <<instantiates>>
+    NonLuxuryVehicleFactory ..> NonLuxuryMinivan : <<instantiates>>
+    
+    %% Client relationships - ONLY uses VehicleFactory
+    ButtonHandler o-- AutoSearchUI : contains
+    ButtonHandler ..> VehicleFactory : <<uses>>

@@ -1,0 +1,77 @@
+sequenceDiagram
+    actor Usuario
+    participant UI as AutoSearchUI
+    participant BH as ButtonHandler
+    participant VF as VehicleFactory
+    participant LVF as LuxuryVehicleFactory
+    participant Car as LuxuryCar
+    
+    Note over Usuario,Car: Ejemplo: Buscar Luxury Car
+    
+    Usuario->>UI: Selecciona "Luxury" en ComboBox
+    Usuario->>UI: Selecciona "Car" en ComboBox
+    Usuario->>UI: Click botón "Show"
+    
+    UI->>BH: eventOpenButton()
+    activate BH
+    
+    BH->>UI: getCmbVehicleCategory().get()
+    activate UI
+    UI-->>BH: "Luxury"
+    deactivate UI
+    
+    BH->>UI: getCmbVehicleType().get()
+    activate UI
+    UI-->>BH: "Car"
+    deactivate UI
+    
+    BH->>VF: getVehicleFactory("Luxury")
+    activate VF
+    
+    alt tipo == LUXURY_VEHICLE
+        VF->>LVF: new LuxuryVehicleFactory()
+        activate LVF
+        LVF-->>VF: factory
+        deactivate LVF
+    else tipo == NON_LUXURY_VEHICLE
+        VF->>VF: new NonLuxuryVehicleFactory()
+    end
+    
+    VF-->>BH: luxuryFactory
+    deactivate VF
+    
+    alt vhType == "Car"
+        BH->>LVF: getCar()
+        activate LVF
+        LVF->>Car: new LuxuryCar("Luxury-Car")
+        activate Car
+        Car-->>LVF: luxuryCar
+        deactivate Car
+        LVF-->>BH: car
+        deactivate LVF
+        
+        BH->>Car: getCarName()
+        activate Car
+        Car-->>BH: "Luxury-Car"
+        deactivate Car
+        
+        BH->>Car: getCarFeatures()
+        activate Car
+        Car-->>BH: "Luxury Car Features"
+        deactivate Car
+        
+        BH->>BH: searchResult = "Name: Luxury-Car<br/>Features: Luxury Car Features"
+        
+    else vhType == "SUV"
+        Note over BH,LVF: Similar flow for getSUV()
+    else vhType == "Mini-Van"
+        Note over BH,LVF: Similar flow for getMiniVan()
+    end
+    
+    BH->>UI: setText(searchResult)
+    activate UI
+    UI->>UI: lblCarNameValue.config(text=searchResult)
+    UI-->>Usuario: Muestra resultado
+    deactivate UI
+    
+    deactivate BH

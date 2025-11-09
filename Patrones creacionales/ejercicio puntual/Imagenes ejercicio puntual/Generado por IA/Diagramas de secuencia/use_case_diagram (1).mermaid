@@ -1,0 +1,63 @@
+%%{init: {'theme':'base'}}%%
+graph LR
+    %% Actor
+    Usuario["👤 Usuario"]
+    
+    %% System Boundary with Use Cases
+    subgraph Sistema["🚗 Sistema de Búsqueda de Vehículos (Abstract Factory Pattern)"]
+        direction TB
+        
+        subgraph Primarios["Casos de Uso de Usuario"]
+            UC_MAIN("Usar Sistema de<br/>Búsqueda de Vehículos")
+            UC1("Seleccionar Categoría<br/>de Vehículo")
+            UC2("Seleccionar Tipo<br/>de Vehículo")
+            UC3("Buscar Vehículo")
+            UC4("Visualizar Resultado<br/>de Búsqueda")
+            UC5("Salir del Sistema")
+        end
+        
+        subgraph Internos["Procesos Internos (Abstract Factory)"]
+            UC6("Obtener Fábrica<br/>Apropiada")
+            UC7("Crear Vehículo<br/>de Lujo")
+            UC8("Crear Vehículo<br/>No Lujoso")
+            UC9("Obtener Características<br/>del Vehículo")
+        end
+    end
+    
+    %% Actor to Main Use Case ONLY
+    Usuario ==> UC_MAIN
+    
+    %% Main use case includes other user interactions
+    UC_MAIN -.->|"≪include≫"| UC1
+    UC_MAIN -.->|"≪include≫"| UC2
+    UC_MAIN -.->|"≪include≫"| UC3
+    UC_MAIN -.->|"≪include≫"| UC4
+    
+    %% Exit is optional (extend)
+    UC5 -.->|"≪extend≫"| UC_MAIN
+    
+    %% Search includes internal processes
+    UC3 -.->|"≪include≫"| UC6
+    UC3 -.->|"≪include≫"| UC9
+    
+    %% Factory selection extends based on category
+    UC7 -.->|"≪extend≫<br/>[categoría=Luxury]"| UC6
+    UC8 -.->|"≪extend≫<br/>[categoría=Non-Luxury]"| UC6
+    
+    %% Styling
+    style Usuario fill:#FFE0B2,stroke:#E65100,stroke-width:3px
+    style Sistema fill:#E3F2FD,stroke:#1976D2,stroke-width:3px
+    style Primarios fill:#F1F8E9,stroke:#558B2F,stroke-width:2px
+    style Internos fill:#FCE4EC,stroke:#C2185B,stroke-width:2px
+    
+    style UC_MAIN fill:#42A5F5,stroke:#0D47A1,stroke-width:4px,color:#FFF
+    style UC1 fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style UC2 fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style UC3 fill:#64B5F6,stroke:#1976D2,stroke-width:3px
+    style UC4 fill:#81C784,stroke:#2E7D32,stroke-width:2px
+    style UC5 fill:#E57373,stroke:#C62828,stroke-width:2px
+    
+    style UC6 fill:#FFB74D,stroke:#E65100,stroke-width:2px
+    style UC7 fill:#BA68C8,stroke:#6A1B9A,stroke-width:2px
+    style UC8 fill:#BA68C8,stroke:#6A1B9A,stroke-width:2px
+    style UC9 fill:#FFB74D,stroke:#E65100,stroke-width:2px

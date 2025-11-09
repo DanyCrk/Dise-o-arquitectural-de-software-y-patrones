@@ -1,0 +1,28 @@
+sequenceDiagram
+    actor Usuario
+    participant UI as AutoSearchUI
+    participant BH as ButtonHandler
+    participant Tk as Tk (root)
+    
+    Usuario->>UI: Click botón "Exit"
+    
+    UI->>BH: eventExitButton()
+    activate BH
+    
+    Note over BH: Código en ButtonHandler.py:<br/>def eventExitButton(self)
+    
+    BH->>UI: destroy()
+    activate UI
+    Note over UI: Destruye ventana AutoSearchUI
+    UI-->>BH: ventana cerrada
+    deactivate UI
+    
+    BH->>Tk: destroy()
+    activate Tk
+    Note over Tk: Destruye ventana root (Tk)
+    Tk-->>BH: aplicación finalizada
+    deactivate Tk
+    
+    deactivate BH
+    
+    Note over Usuario: Aplicación cerrada

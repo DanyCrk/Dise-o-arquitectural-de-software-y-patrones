@@ -1,0 +1,64 @@
+sequenceDiagram
+    actor Usuario
+    participant UI as AutoSearchUI
+    participant BH as ButtonHandler
+    participant VF as VehicleFactory
+    participant NLVF as NonLuxuryVehicleFactory
+    participant SUV as NonLuxurySUV
+    
+    Note over Usuario,SUV: Ejemplo: Buscar Non-Luxury SUV
+    
+    Usuario->>UI: Selecciona "Non-Luxury"
+    Usuario->>UI: Selecciona "SUV"
+    Usuario->>UI: Click botón "Show"
+    
+    UI->>BH: eventOpenButton()
+    activate BH
+    
+    BH->>UI: getCmbVehicleCategory().get()
+    UI-->>BH: "Non-Luxury"
+    
+    BH->>UI: getCmbVehicleType().get()
+    UI-->>BH: "SUV"
+    
+    BH->>VF: getVehicleFactory("Non-Luxury")
+    activate VF
+    
+    VF->>NLVF: new NonLuxuryVehicleFactory()
+    activate NLVF
+    NLVF-->>VF: factory
+    deactivate NLVF
+    
+    VF-->>BH: nonLuxuryFactory
+    deactivate VF
+    
+    BH->>NLVF: getSUV()
+    activate NLVF
+    
+    NLVF->>SUV: new NonLuxurySUV("Non Luxury-SUV")
+    activate SUV
+    SUV-->>NLVF: nonLuxurySUV
+    deactivate SUV
+    
+    NLVF-->>BH: suv
+    deactivate NLVF
+    
+    BH->>SUV: getSUVName()
+    activate SUV
+    SUV-->>BH: "Non Luxury-SUV"
+    deactivate SUV
+    
+    BH->>SUV: getSUVFeatures()
+    activate SUV
+    SUV-->>BH: "Non-Luxury SUV Features"
+    deactivate SUV
+    
+    BH->>BH: searchResult = "Name: Non Luxury-SUV<br/>Features: Non-Luxury SUV Features"
+    
+    BH->>UI: setText(searchResult)
+    activate UI
+    UI->>UI: lblCarNameValue.config(text=searchResult)
+    UI-->>Usuario: Muestra resultado
+    deactivate UI
+    
+    deactivate BH

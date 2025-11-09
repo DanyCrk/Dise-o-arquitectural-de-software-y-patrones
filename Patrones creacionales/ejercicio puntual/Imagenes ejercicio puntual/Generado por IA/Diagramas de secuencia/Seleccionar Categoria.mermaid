@@ -1,0 +1,37 @@
+sequenceDiagram
+    actor Usuario
+    participant UI as AutoSearchUI
+    participant CB1 as cmbVehicleCategory<br/>(Combobox)
+    participant CB2 as cmbVehicleType<br/>(Combobox)
+    
+    Note over Usuario,CB2: Interacción con la interfaz
+    
+    rect rgb(230, 245, 255)
+        Note over Usuario,CB1: Seleccionar Categoría
+        Usuario->>CB1: Click en ComboBox
+        activate CB1
+        CB1-->>Usuario: Muestra opciones:<br/>["Luxury", "Non-Luxury"]
+        deactivate CB1
+        
+        Usuario->>CB1: Selecciona "Luxury"
+        activate CB1
+        CB1->>CB1: Actualiza valor seleccionado
+        Note over CB1: Valor almacenado: "Luxury"
+        deactivate CB1
+    end
+    
+    rect rgb(245, 255, 230)
+        Note over Usuario,CB2: Seleccionar Tipo
+        Usuario->>CB2: Click en ComboBox
+        activate CB2
+        CB2-->>Usuario: Muestra opciones:<br/>["Car", "SUV", "Mini-Van"]
+        deactivate CB2
+        
+        Usuario->>CB2: Selecciona "Car"
+        activate CB2
+        CB2->>CB2: Actualiza valor seleccionado
+        Note over CB2: Valor almacenado: "Car"
+        deactivate CB2
+    end
+    
+    Note over Usuario,CB2: Los valores quedan listos<br/>para usarse al presionar "Show"
