@@ -1,11 +1,10 @@
 # This example was elaborated from Partha Kuchana's example of his book "Software Architecture Design Patterns in Java" by Daniel Hernández Olis and adapted by Henry
 # Alberto Diosa with padagogical purposes.
-
+ButtonHandler.py
 from tkinter import *
 from tkinter import ttk
 from AbstractFactory import *
 from AutoSearchUI import *
-
 class ButtonHandler:
     def __init__(self,root):
         self.__root=root
