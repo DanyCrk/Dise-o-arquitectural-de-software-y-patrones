@@ -30,8 +30,7 @@ class EstacionCarga {
 
     public synchronized void finishCharge(String vehicle) {
         totalChargingVehicles = totalChargingVehicles - 1;
-        System.out.println(vehicle +
-                           " ha finalizado carga, notificar vehículo en espera");
+        System.out.println(vehicle + " ha terminado su atención. " +"Aforo actual: (" +totalChargingVehicles + "/" + MAX_CAPACITY + ")");
         notify();
     }
 }
