@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import com.sun.java.swing.plaf.windows.*;
+
 
 public class ReportManager extends JFrame 
   implements Observable {
@@ -79,7 +79,8 @@ public class ReportManager extends JFrame
     Container contentPane = getContentPane();
     contentPane.add(buttonPanel, BorderLayout.CENTER);
     try {
-      UIManager.setLookAndFeel(new WindowsLookAndFeel());
+      UIManager.setLookAndFeel(
+       "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
       SwingUtilities.updateComponentTreeUI(
         ReportManager.this);
     } catch (Exception ex) {

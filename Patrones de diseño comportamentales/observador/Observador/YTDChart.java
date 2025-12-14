@@ -2,7 +2,7 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import com.sun.java.swing.plaf.windows.*;
+
 import java.util.*;
 
 public class YTDChart extends JFrame implements Observer {
@@ -20,7 +20,8 @@ public class YTDChart extends JFrame implements Observer {
     objReportManager = inp_objReportManager;
 
     try {
-      UIManager.setLookAndFeel(new WindowsLookAndFeel());
+      UIManager.setLookAndFeel(
+       "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
       SwingUtilities.updateComponentTreeUI(YTDChart.this);
     } catch (Exception ex) {
       System.out.println(ex);

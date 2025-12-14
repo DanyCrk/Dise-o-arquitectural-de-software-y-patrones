@@ -3,7 +3,7 @@ import java.io.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import com.sun.java.swing.plaf.windows.*;
+
 
 public class AccountManager extends JFrame {
   public static final String newline = "\n";
@@ -116,7 +116,7 @@ public class AccountManager extends JFrame {
 
     contentPane.add(buttonPanel, BorderLayout.CENTER);
     try {
-      UIManager.setLookAndFeel(new WindowsLookAndFeel());
+      UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
       SwingUtilities.updateComponentTreeUI(
         AccountManager.this);
     } catch (Exception ex) {

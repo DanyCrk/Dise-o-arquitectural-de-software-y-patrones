@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import java.util.*;
-import com.sun.java.swing.plaf.windows.*;
+
 
 
 public class MonthlyReport extends JFrame implements Observer {
@@ -40,7 +40,8 @@ public class MonthlyReport extends JFrame implements Observer {
     Container contentPane = getContentPane();
     contentPane.add(buttonPanel, BorderLayout.CENTER);
     try {
-      UIManager.setLookAndFeel(new WindowsLookAndFeel());
+      UIManager.setLookAndFeel(
+        "com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
       SwingUtilities.updateComponentTreeUI(
         MonthlyReport.this);
     } catch (Exception ex) {
